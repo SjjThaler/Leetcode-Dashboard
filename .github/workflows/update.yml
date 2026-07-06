@@ -1,0 +1,50 @@
+name: Update LeetCode stats
+
+on:
+  # Run automatically every 6 hours.
+  schedule:
+    - cron: "0 */6 * * *"
+  # Let you trigger it by hand from the Actions tab.
+  workflow_dispatch: {}
+  # Refresh whenever you change the username list or the fetch script.
+  push:
+    branches: [main]
+    paths:
+      - "usernames.json"
+      - "scripts/fetch_stats.py"
+
+# Allow the workflow to commit the updated data.json back to the repo.
+permissions:
+  contents: write
+
+# Avoid overlapping runs stepping on each other.
+concurrency:
+  group: update-stats
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch stats
+        run: python scripts/fetch_stats.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: update LeetCode stats"
+            git push
+          fi
