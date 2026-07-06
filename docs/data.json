@@ -1,6 +1,46 @@
 {
-  "generated_at": "2026-07-06T06:44:51+00:00",
+  "generated_at": "2026-07-06T06:52:20+00:00",
   "users": [
+    {
+      "leetcode": "LikeRooock",
+      "name": "LikeRooock",
+      "avatar": "https://assets.leetcode.com/users/default_avatar.jpg",
+      "ranking": 1525520,
+      "total": 104,
+      "easy": 94,
+      "medium": 10,
+      "hard": 0,
+      "recent": [
+        {
+          "title": "Most Common Word",
+          "titleSlug": "most-common-word",
+          "timestamp": 1753287077
+        },
+        {
+          "title": "Goat Latin",
+          "titleSlug": "goat-latin",
+          "timestamp": 1753284198
+        },
+        {
+          "title": "Jewels and Stones",
+          "titleSlug": "jewels-and-stones",
+          "timestamp": 1753280735
+        }
+      ],
+      "error": null
+    },
+    {
+      "leetcode": "Rizuha",
+      "name": "Rizuha",
+      "avatar": "https://assets.leetcode.com/users/default_avatar.jpg",
+      "ranking": 3190629,
+      "total": 35,
+      "easy": 30,
+      "medium": 5,
+      "hard": 0,
+      "recent": [],
+      "error": null
+    },
     {
       "leetcode": "SjjThaler",
       "name": "Stefan",
