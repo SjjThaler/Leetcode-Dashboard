@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Grind — LeetCode Leaderboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #13142a;
+    --bg-glow: #24245a;
+    --panel: #1a1c39;
+    --panel-2: #202449;
+    --line: rgba(255, 255, 255, 0.08);
+    --line-strong: rgba(255, 255, 255, 0.14);
+    --text: #edecf9;
+    --muted: #8d8fc0;
+    --faint: #63659a;
+
+    --easy: #2ac4a8;
+    --medium: #f4b23f;
+    --hard: #f55c7a;
+
+    --gold: #f3c64d;
+    --silver: #c9cde3;
+    --bronze: #d98b58;
+
+    --display: "Space Grotesk", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--display);
+    color: var(--text);
+    background:
+      radial-gradient(1100px 620px at 82% -8%, var(--bg-glow) 0%, transparent 58%),
+      radial-gradient(900px 520px at -6% 4%, #1d2c4a 0%, transparent 52%),
+      var(--bg);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+  }
+
+  /* ---- Header ---- */
+  header { margin-bottom: 40px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-size: clamp(38px, 8vw, 68px);
+    line-height: 0.94;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin: 0 0 22px;
+  }
+  h1 .amp { color: var(--medium); }
+
+  .summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 22px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .summary strong { color: var(--text); font-weight: 700; }
+  .dot { color: var(--faint); }
+
+  /* ---- Controls ---- */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 30px 0 18px;
+  }
+  .sort-btn {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .sort-btn:hover { color: var(--text); border-color: var(--line-strong); }
+  .sort-btn[aria-pressed="true"] {
+    color: var(--bg);
+    background: var(--text);
+    border-color: var(--text);
+  }
+  .sort-btn:focus-visible {
+    outline: 2px solid var(--medium);
+    outline-offset: 2px;
+  }
+
+  /* ---- Rows ---- */
+  .board { display: flex; flex-direction: column; gap: 10px; }
+
+  .row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 46px 1fr auto;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 22px 18px 18px;
+    background: linear-gradient(var(--panel), var(--panel));
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .row::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+  }
+  .row.r1::before { background: var(--gold); }
+  .row.r2::before { background: var(--silver); }
+  .row.r3::before { background: var(--bronze); }
+  .row.r1 {
+    background:
+      linear-gradient(90deg, rgba(243, 198, 77, 0.10), transparent 42%),
+      var(--panel-2);
+    border-color: rgba(243, 198, 77, 0.28);
+  }
+
+  .rank {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 22px;
+    text-align: center;
+    color: var(--faint);
+  }
+  .row.r1 .rank { color: var(--gold); }
+  .row.r2 .rank { color: var(--silver); }
+  .row.r3 .rank { color: var(--bronze); }
+
+  .who { min-width: 0; }
+  .name-line { display: flex; align-items: center; gap: 10px; }
+  .avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--panel-2);
+    border: 1px solid var(--line-strong);
+    flex-shrink: 0;
+  }
+  .name {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .crown { font-size: 14px; }
+
+  .recent {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--faint);
+    margin: 7px 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .recent a { color: var(--muted); text-decoration: none; }
+  .recent a:hover { color: var(--text); text-decoration: underline; }
+
+  .score { text-align: right; }
+  .total {
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1;
+  }
+  .total-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-top: 5px;
+  }
+
+  /* difficulty track spans full width under the row content */
+  .track-wrap { grid-column: 1 / -1; margin-top: 4px; }
+  .track {
+    display: flex;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .seg { height: 100%; width: 0; transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+  .seg.easy { background: var(--easy); }
+  .seg.medium { background: var(--medium); }
+  .seg.hard { background: var(--hard); }
+
+  .breakdown {
+    display: flex;
+    gap: 16px;
+    margin-top: 9px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .breakdown i { font-style: normal; }
+  .breakdown .e b { color: var(--easy); }
+  .breakdown .m b { color: var(--medium); }
+  .breakdown .h b { color: var(--hard); }
+  .breakdown b { font-weight: 700; }
+
+  .row.errored { opacity: 0.55; }
+  .row.errored .total { font-size: 15px; color: var(--faint); }
+
+  /* ---- Legend + footer ---- */
+  .legend {
+    display: flex;
+    gap: 18px;
+    margin-top: 26px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  .swatch { width: 10px; height: 10px; border-radius: 3px; }
+  .swatch.easy { background: var(--easy); }
+  .swatch.medium { background: var(--medium); }
+  .swatch.hard { background: var(--hard); }
+
+  footer {
+    margin-top: 46px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--faint);
+    text-align: center;
+  }
+  footer a { color: var(--muted); }
+
+  .state {
+    padding: 40px 24px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+    border: 1px dashed var(--line-strong);
+    border-radius: 16px;
+  }
+  .state code {
+    font-family: var(--mono);
+    color: var(--text);
+    background: var(--panel-2);
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 560px) {
+    .row { grid-template-columns: 34px 1fr auto; gap: 12px; padding: 16px; }
+    .total { font-size: 22px; }
+    .avatar { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seg { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">// leetcode &middot; friends only</p>
+      <h1>The Grind</h1>
+      <div class="summary" id="summary"></div>
+    </header>
+
+    <div class="controls" id="controls" role="group" aria-label="Sort leaderboard">
+      <button class="sort-btn" data-key="total" aria-pressed="true">Total</button>
+      <button class="sort-btn" data-key="hard">Hard</button>
+      <button class="sort-btn" data-key="medium">Medium</button>
+      <button class="sort-btn" data-key="easy">Easy</button>
+    </div>
+
+    <div class="board" id="board"></div>
+
+    <div class="legend">
+      <span><i class="swatch easy"></i> Easy</span>
+      <span><i class="swatch medium"></i> Medium</span>
+      <span><i class="swatch hard"></i> Hard</span>
+    </div>
+
+    <footer id="footer"></footer>
+  </div>
+
+<script>
+  const board = document.getElementById("board");
+  const summaryEl = document.getElementById("summary");
+  const footerEl = document.getElementById("footer");
+  const controls = document.getElementById("controls");
+
+  let users = [];
+  let sortKey = "total";
+
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  }[c]));
+
+  function timeAgo(iso) {
+    const then = new Date(iso).getTime();
+    if (isNaN(then)) return "";
+    const secs = Math.max(0, Math.floor((Date.now() - then) / 1000));
+    if (secs < 90) return "just now";
+    const mins = Math.floor(secs / 60);
+    if (mins < 60) return mins + "m ago";
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return hrs + "h ago";
+    return Math.floor(hrs / 24) + "d ago";
+  }
+
+  function render() {
+    const ranked = [...users].sort((a, b) => {
+      if (a.error && !b.error) return 1;
+      if (!a.error && b.error) return -1;
+      return (b[sortKey] || 0) - (a[sortKey] || 0);
+    });
+
+    const maxTotal = Math.max(1, ...users.map((u) => u.total || 0));
+
+    board.innerHTML = ranked.map((u, i) => {
+      const rank = i + 1;
+      const medal = u.error ? "" : (rank <= 3 ? ` r${rank}` : "");
+      const crown = (!u.error && rank === 1) ? '<span class="crown">👑</span>' : "";
+
+      if (u.error) {
+        return `
+          <div class="row errored">
+            <div class="rank">–</div>
+            <div class="who">
+              <div class="name-line"><span class="name">${esc(u.name)}</span></div>
+              <p class="recent">couldn't load @${esc(u.leetcode)} — check the username</p>
+            </div>
+            <div class="score"><div class="total">n/a</div></div>
+          </div>`;
+      }
+
+      const scale = (u.total / maxTotal) * 100;
+      const eW = u.total ? (u.easy / u.total) * scale : 0;
+      const mW = u.total ? (u.medium / u.total) * scale : 0;
+      const hW = u.total ? (u.hard / u.total) * scale : 0;
+
+      const avatar = u.avatar
+        ? `<img class="avatar" src="${esc(u.avatar)}" alt="" loading="lazy" />`
+        : `<span class="avatar"></span>`;
+
+      let recent = "";
+      if (u.recent && u.recent.length) {
+        const r = u.recent[0];
+        recent = `<p class="recent">last solved &middot; <a href="https://leetcode.com/problems/${esc(r.titleSlug)}/" target="_blank" rel="noopener">${esc(r.title)}</a></p>`;
+      }
+
+      return `
+        <div class="row${medal}">
+          <div class="rank">${rank}</div>
+          <div class="who">
+            <div class="name-line">${avatar}<span class="name">${esc(u.name)}</span>${crown}</div>
+            ${recent}
+          </div>
+          <div class="score">
+            <div class="total">${u.total}</div>
+            <div class="total-label">solved</div>
+          </div>
+          <div class="track-wrap">
+            <div class="track">
+              <div class="seg easy" style="width:${eW}%"></div>
+              <div class="seg medium" style="width:${mW}%"></div>
+              <div class="seg hard" style="width:${hW}%"></div>
+            </div>
+            <div class="breakdown">
+              <i class="e"><b>${u.easy}</b> Easy</i>
+              <i class="m"><b>${u.medium}</b> Med</i>
+              <i class="h"><b>${u.hard}</b> Hard</i>
+            </div>
+          </div>
+        </div>`;
+    }).join("");
+  }
+
+  controls.addEventListener("click", (e) => {
+    const btn = e.target.closest(".sort-btn");
+    if (!btn) return;
+    sortKey = btn.dataset.key;
+    controls.querySelectorAll(".sort-btn").forEach((b) =>
+      b.setAttribute("aria-pressed", String(b === btn)));
+    render();
+  });
+
+  fetch("./data.json", { cache: "no-store" })
+    .then((res) => {
+      if (!res.ok) throw new Error("no data");
+      return res.json();
+    })
+    .then((data) => {
+      users = data.users || [];
+      const ok = users.filter((u) => !u.error);
+      const groupTotal = ok.reduce((s, u) => s + (u.total || 0), 0);
+      const groupHard = ok.reduce((s, u) => s + (u.hard || 0), 0);
+
+      summaryEl.innerHTML =
+        `<span><strong>${ok.length}</strong> friends</span>` +
+        `<span class="dot">•</span>` +
+        `<span><strong>${groupTotal}</strong> problems solved</span>` +
+        `<span class="dot">•</span>` +
+        `<span><strong>${groupHard}</strong> hard</span>`;
+
+      footerEl.innerHTML = data.generated_at
+        ? `updated ${timeAgo(data.generated_at)} &middot; auto-refreshes every 6h`
+        : "";
+
+      render();
+    })
+    .catch(() => {
+      summaryEl.innerHTML = "";
+      board.innerHTML =
+        `<div class="state">No data yet.<br />` +
+        `Add usernames to <code>usernames.json</code>, then run the ` +
+        `<code>Update LeetCode stats</code> workflow from the Actions tab.</div>`;
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "users": [
+    { "leetcode": "your-leetcode-username", "name": "You" },
+    { "leetcode": "friend-username-1", "name": "Alex" },
+    { "leetcode": "friend-username-2", "name": "Sam" }
+  ]
+}

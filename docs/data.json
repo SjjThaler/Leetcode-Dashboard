@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-07-06T09:00:00+00:00",
+  "users": [
+    {
+      "leetcode": "you",
+      "name": "You",
+      "avatar": null,
+      "ranking": 184920,
+      "total": 342,
+      "easy": 158,
+      "medium": 156,
+      "hard": 28,
+      "recent": [
+        { "title": "Trapping Rain Water", "titleSlug": "trapping-rain-water", "timestamp": 1751792400 }
+      ],
+      "error": null
+    },
+    {
+      "leetcode": "alex",
+      "name": "Alex",
+      "avatar": null,
+      "ranking": 240110,
+      "total": 289,
+      "easy": 171,
+      "medium": 104,
+      "hard": 14,
+      "recent": [
+        { "title": "LRU Cache", "titleSlug": "lru-cache", "timestamp": 1751706000 }
+      ],
+      "error": null
+    },
+    {
+      "leetcode": "sam",
+      "name": "Sam",
+      "avatar": null,
+      "ranking": 512300,
+      "total": 197,
+      "easy": 132,
+      "medium": 59,
+      "hard": 6,
+      "recent": [
+        { "title": "Valid Parentheses", "titleSlug": "valid-parentheses", "timestamp": 1751619600 }
+      ],
+      "error": null
+    },
+    {
+      "leetcode": "jordan",
+      "name": "Jordan",
+      "avatar": null,
+      "ranking": 803455,
+      "total": 88,
+      "easy": 71,
+      "medium": 16,
+      "hard": 1,
+      "recent": [
+        { "title": "Two Sum", "titleSlug": "two-sum", "timestamp": 1751533200 }
+      ],
+      "error": null
+    }
+  ]
+}
