@@ -1,5 +1,7 @@
 {
   "users": [
-    { "leetcode": "SjjThaler", "name": "Stefan" }
+    { "leetcode": "SjjThaler", "name": "Stefan" },
+    { "leetcode": "LikeRooock", "name": "LikeRooock" },
+    { "leetcode": "Rizuha", "name": "Rizuha" }
   ]
 }
