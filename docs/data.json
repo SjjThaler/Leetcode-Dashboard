@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-07-06T06:53:51+00:00",
+  "generated_at": "2026-07-07T09:22:41+00:00",
   "users": [
     {
       "leetcode": "LikeRooock",
       "name": "LikeRooock",
       "avatar": "https://assets.leetcode.com/users/default_avatar.jpg",
-      "ranking": 1525520,
+      "ranking": 1526673,
       "total": 104,
       "easy": 94,
       "medium": 10,
@@ -33,7 +33,7 @@
       "leetcode": "Rizuha",
       "name": "Rizuha",
       "avatar": "https://assets.leetcode.com/users/default_avatar.jpg",
-      "ranking": 3190629,
+      "ranking": 3192873,
       "total": 35,
       "easy": 30,
       "medium": 5,
@@ -45,7 +45,7 @@
       "leetcode": "SjjThaler",
       "name": "Stefan",
       "avatar": "https://assets.leetcode.com/users/default_avatar.jpg",
-      "ranking": 4448332,
+      "ranking": 4451008,
       "total": 18,
       "easy": 18,
       "medium": 0,
@@ -54,7 +54,7 @@
         {
           "title": "Two Sum",
           "titleSlug": "two-sum",
-          "timestamp": 1751897329
+          "timestamp": 1783339821
         }
       ],
       "error": null
