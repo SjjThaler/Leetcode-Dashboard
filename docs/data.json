@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-07-22T08:07:22+00:00",
+  "generated_at": "2026-07-23T08:10:29+00:00",
   "users": [
     {
       "leetcode": "LikeRooock",
       "name": "LikeRooock",
       "avatar": "https://assets.leetcode.com/users/default_avatar.jpg",
-      "ranking": 1545670,
+      "ranking": 1547036,
       "total": 104,
-      "easy": 94,
-      "medium": 10,
+      "easy": 93,
+      "medium": 11,
       "hard": 0,
       "recent": [
         {
@@ -33,7 +33,7 @@
       "leetcode": "Rizuha",
       "name": "Rizuha",
       "avatar": "https://assets.leetcode.com/users/default_avatar.jpg",
-      "ranking": 3228731,
+      "ranking": 3231677,
       "total": 35,
       "easy": 30,
       "medium": 5,
@@ -45,7 +45,7 @@
       "leetcode": "SjjThaler",
       "name": "Stefan",
       "avatar": "https://assets.leetcode.com/users/default_avatar.jpg",
-      "ranking": 4498705,
+      "ranking": 4502724,
       "total": 18,
       "easy": 18,
       "medium": 0,
